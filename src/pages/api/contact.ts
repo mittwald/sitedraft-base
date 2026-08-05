@@ -101,7 +101,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     await transporter.sendMail({
-      from: config.smtp.from,
+      from: {
+        name: config.smtp.fromName || config.name,
+        address: config.smtp.from,
+      },
       to: config.smtp.to,
       replyTo: email,
       subject: `Kontaktanfrage von ${fullName}`,

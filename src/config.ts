@@ -56,6 +56,7 @@ export const config = {
     user: "",
     pass: "",
     from: "",
+    fromName: "", // Empty = `name` (top) will be used
     to: "",
   },
   erecht24: {
