@@ -19,6 +19,7 @@ const faviconSource = ["public/favicon.svg", "public/favicon.png"].find(
 export default defineConfig({
   site,
   output: "static",
+  trailingSlash: "never",
   adapter: node({ mode: "standalone" }),
   security: {
     checkOrigin: true,
