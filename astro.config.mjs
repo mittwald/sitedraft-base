@@ -1,5 +1,5 @@
 // @ts-check
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import react from "@astrojs/react";
@@ -14,6 +14,12 @@ const site = "https://example.com";
 const faviconSource = ["public/favicon.svg", "public/favicon.png"].find(
   (path) => existsSync(path),
 );
+
+// Read, not imported: an import would make src/config.ts a config dependency,
+// and every edit to it would trigger astro dev's in-process config reload.
+const siteName =
+  /^\s*name:\s*"([^"]*)"/m.exec(readFileSync("src/config.ts", "utf-8"))?.[1] ??
+  "Website";
 
 // https://astro.build/config
 export default defineConfig({
@@ -81,6 +87,14 @@ export default defineConfig({
     react(),
     icon(),
     sitemap(),
-    ...(faviconSource ? [favicons({ input: faviconSource })] : []),
+    ...(faviconSource
+      ? [
+          favicons({
+            input: faviconSource,
+            name: siteName,
+            short_name: siteName,
+          }),
+        ]
+      : []),
   ],
 });
