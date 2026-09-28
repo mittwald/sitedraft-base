@@ -8,6 +8,7 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import favicons from "astro-favicons";
 import elementIds from "./plugins/vite-plugin-element-ids";
+import aiNotice from "./plugins/ai-notice";
 // Keep in sync with config.site in src/config.ts
 const site = "https://example.com";
 
@@ -84,6 +85,7 @@ export default defineConfig({
   },
 
   integrations: [
+    aiNotice(),
     react(),
     icon(),
     sitemap(),
